@@ -15,10 +15,11 @@ Result:
 - 60-second timer reached `0.0`.
 - Codex made 74 visible action choices.
 - Missed clicks: 0.
-- Final result title: `Codex wins the sparring match.`
+- The original run passed before wording was clarified.
+- Current result title: `Codex clears the simulated pressure drill.`
 - Final score: `17505`
 - Codex Edge: `100%`
-- Claude Pressure: `0%`
+- Simulated Claude Pressure: `0%`
 - Current streak: `74`
 - Trace entries: `76`
 
@@ -29,3 +30,11 @@ First choices observed:
 3. High risk -> Observe
 4. Contract -> Verify
 5. Proof gate -> Verify
+
+Copy clarification added after this run:
+
+- The UI now asks `질문: Codex는 다음에 무엇을 해야 할까?`
+- Small English helper text appears under the primary Korean copy.
+- The project now states that no Claude API is used.
+- The opponent is framed as simulated Claude-style pressure, not real Claude.
+- The win state is framed as clearing a simulated pressure drill.

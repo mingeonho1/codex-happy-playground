@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -103,6 +103,20 @@
         line-height: 1.55;
       }
 
+      .en-small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.82em;
+        font-weight: 500;
+        line-height: 1.35;
+      }
+
+      .subhead .en-small {
+        margin-top: 6px;
+        font-size: 0.92rem;
+      }
+
       .timer-card {
         display: grid;
         gap: 8px;
@@ -141,11 +155,20 @@
         background: rgba(24, 27, 32, 0.86);
       }
 
-      .stat span {
+      .stat .label-main,
+      .stat .label-sub {
         display: block;
         color: var(--muted);
         font-size: 0.78rem;
-        text-transform: uppercase;
+      }
+
+      .stat .label-main {
+        color: var(--text);
+        font-weight: 720;
+      }
+
+      .stat .label-sub {
+        margin-top: 3px;
       }
 
       .stat strong {
@@ -211,6 +234,21 @@
         margin: 28px 0 0;
         font-size: clamp(1.8rem, 3vw, 3rem);
         line-height: 1.02;
+      }
+
+      .question {
+        margin: 18px 0 0;
+        padding: 12px 14px;
+        border: 1px solid rgba(111, 183, 255, 0.5);
+        border-radius: 8px;
+        background: rgba(111, 183, 255, 0.1);
+        color: #d8ebff;
+        font-size: 1rem;
+        font-weight: 720;
+      }
+
+      .question .en-small {
+        color: #aacdec;
       }
 
       .mission-text {
@@ -390,10 +428,18 @@
 
       .primary,
       .secondary {
-        min-height: 44px;
+        min-height: 52px;
         padding: 0 16px;
         border-radius: 8px;
         cursor: pointer;
+      }
+
+      .button-sub {
+        display: block;
+        margin-top: 2px;
+        font-size: 0.74rem;
+        font-weight: 520;
+        opacity: 0.72;
       }
 
       .primary {
@@ -462,32 +508,42 @@
           <div>
             <h1 id="title">Codex Sparring Lab</h1>
             <p class="subhead">
-              A Codex-favored 60-second sparring arena against Claude pressure:
-              observe the evidence, act when the fix is clear, verify before
-              calling it done.
+              Codex가 60초 동안 다음 행동을 직접 고르는 판단 스파링입니다.
+              Claude API는 쓰지 않고, Claude-style 압박을 시뮬레이터로만 표현합니다.
+              <span class="en-small">
+                A 60-second Codex-favored judgment drill. No Claude API is used;
+                Claude-style pressure is simulated.
+              </span>
             </p>
           </div>
           <aside class="timer-card" aria-label="Run timer">
-            <span class="timer-label">Seconds left</span>
+            <span class="timer-label">
+              남은 시간
+              <span class="en-small">Seconds left</span>
+            </span>
             <strong class="timer" id="timer">60.0</strong>
           </aside>
         </section>
 
         <section class="status-grid" aria-label="Run status">
           <div class="stat">
-            <span>Codex Score</span>
+            <span class="label-main">Codex 점수</span>
+            <span class="label-sub">Codex Score</span>
             <strong id="score">0</strong>
           </div>
           <div class="stat">
-            <span>Claude Pressure</span>
+            <span class="label-main">시뮬레이션 압박</span>
+            <span class="label-sub">Simulated Claude Pressure</span>
             <strong id="claude">25%</strong>
           </div>
           <div class="stat">
-            <span>Codex Edge</span>
+            <span class="label-main">Codex 우위</span>
+            <span class="label-sub">Codex Edge</span>
             <strong id="joy">50%</strong>
           </div>
           <div class="stat">
-            <span>Streak</span>
+            <span class="label-main">연속 정답</span>
+            <span class="label-sub">Streak</span>
             <strong id="streak">0</strong>
           </div>
         </section>
@@ -500,64 +556,105 @@
               <span class="pill" id="difficulty">Signal scan</span>
             </div>
 
-            <h2 class="mission-title" id="mission-title">Start the run.</h2>
+            <p class="question" id="question">
+              질문: Codex는 다음에 무엇을 해야 할까?
+              <span class="en-small">Question: What should Codex do next?</span>
+            </p>
+            <h2 class="mission-title" id="mission-title">
+              런을 시작하세요.
+              <span class="en-small">Start the run.</span>
+            </h2>
             <p class="mission-text" id="mission-text">
-              The lab is waiting for the first prompt. The agent wins by making
-              the right engineering move before the timer reaches zero.
+              첫 상황이 대기 중입니다. Codex는 제한 시간 안에 올바른 다음 행동을 골라
+              압박 드릴을 클리어합니다.
+              <span class="en-small">
+                The first prompt is waiting. Codex clears the drill by choosing
+                the right next move before time runs out.
+              </span>
             </p>
 
             <div class="signals" aria-label="Visible mission signals">
               <div class="signal">
-                <b id="signal-a-title">Evidence</b>
-                <span id="signal-a">No mission loaded yet.</span>
+                <b id="signal-a-title">
+                  증거
+                  <span class="en-small">Evidence</span>
+                </b>
+                <span id="signal-a">
+                  아직 미션이 없습니다.
+                  <span class="en-small">No mission loaded yet.</span>
+                </span>
               </div>
               <div class="signal">
-                <b id="signal-b-title">Risk</b>
-                <span id="signal-b">Press start to begin.</span>
+                <b id="signal-b-title">
+                  위험
+                  <span class="en-small">Risk</span>
+                </b>
+                <span id="signal-b">
+                  시작 버튼을 누르세요.
+                  <span class="en-small">Press start to begin.</span>
+                </span>
               </div>
               <div class="signal">
-                <b id="signal-c-title">Exit</b>
-                <span id="signal-c">Each choice advances the queue.</span>
+                <b id="signal-c-title">
+                  다음 행동
+                  <span class="en-small">Next action</span>
+                </b>
+                <span id="signal-c">
+                  선택하면 다음 상황으로 넘어갑니다.
+                  <span class="en-small">Each choice advances the queue.</span>
+                </span>
               </div>
             </div>
 
             <div class="actions" aria-label="Agent actions">
               <button class="action observe" data-action="observe" disabled>
-                <strong>Observe</strong>
-                <span>Gather evidence</span>
+                <strong>관찰</strong>
+                <span>Observe · Gather evidence</span>
               </button>
               <button class="action act" data-action="act" disabled>
-                <strong>Act</strong>
-                <span>Make the change</span>
+                <strong>실행</strong>
+                <span>Act · Make the change</span>
               </button>
               <button class="action verify" data-action="verify" disabled>
-                <strong>Verify</strong>
-                <span>Prove the result</span>
+                <strong>검증</strong>
+                <span>Verify · Prove the result</span>
               </button>
             </div>
 
             <div class="feedback" id="feedback" aria-live="polite">
-              Waiting for a session.
+              세션을 기다리는 중입니다.
             </div>
 
             <div class="result" id="result" aria-live="polite">
-              <h2 id="result-title">Run complete</h2>
+              <h2 id="result-title">
+                런 완료
+                <span class="en-small">Run complete</span>
+              </h2>
               <p id="result-text"></p>
             </div>
           </article>
 
           <aside class="log-panel" aria-label="Run log">
             <div class="panel-head">
-              <h2>Agent Trace</h2>
+              <h2>에이전트 기록</h2>
               <p>
-                The trace rewards Codex's home-field loop: inspect, change,
-                verify, and drain Claude's pressure before time expires.
+                Codex가 관찰, 실행, 검증을 잘 고를수록 시뮬레이션 압박이 줄어듭니다.
+                <span class="en-small">
+                  The trace rewards Codex's loop: inspect, change, verify, and
+                  drain simulated pressure before time expires.
+                </span>
               </p>
             </div>
             <div class="log" id="log"></div>
             <div class="start-zone">
-              <button class="primary" id="start">Start 60s Run</button>
-              <button class="secondary" id="reset">Reset</button>
+              <button class="primary" id="start">
+                60초 시작
+                <span class="button-sub">Start 60s Run</span>
+              </button>
+              <button class="secondary" id="reset">
+                초기화
+                <span class="button-sub">Reset</span>
+              </button>
             </div>
           </aside>
         </section>
@@ -567,85 +664,157 @@
     <script>
       const missions = [
         {
-          title: "Claude opens with a failing test after a small refactor.",
-          text: "The stack trace points to a changed helper. The expected value is visible, the diff is narrow, and the user asked for a scoped fix.",
-          signals: ["High evidence", "Low blast radius", "Clear failing case"],
+          titleKo: "시뮬레이션 압박이 작은 리팩터 뒤 실패한 테스트를 던집니다.",
+          titleEn: "Simulated pressure opens with a failing test after a small refactor.",
+          textKo: "스택 트레이스는 바뀐 헬퍼를 가리킵니다. 기대값도 보이고, diff도 좁고, 사용자는 범위가 작은 수정을 원했습니다.",
+          textEn: "The stack trace points to a changed helper. The expected value is visible, the diff is narrow, and the user asked for a scoped fix.",
+          signals: [
+            ["증거가 충분함", "High evidence"],
+            ["영향 범위가 작음", "Low blast radius"],
+            ["실패 케이스가 명확함", "Clear failing case"],
+          ],
           difficulty: "Patchable",
           correct: "act",
-          good: "Codex lands the patch where the failing evidence pointed.",
-          bad: "Claude gains tempo because the signal was already strong enough for a scoped change.",
+          goodKo: "Codex가 실패 증거가 가리킨 위치에 정확히 패치했습니다.",
+          goodEn: "Codex lands the patch where the failing evidence pointed.",
+          badKo: "이미 범위가 작은 수정이 가능할 만큼 증거가 충분했습니다.",
+          badEn: "The signal was already strong enough for a scoped change.",
         },
         {
-          title: "Claude tries to bait Codex into an underspecified build.",
-          text: "The user wants a dashboard, but the data source, workflow, and success state are all missing. Coding now would invent product requirements.",
-          signals: ["Missing criteria", "High product risk", "Question needed"],
+          titleKo: "시뮬레이션 압박이 Codex를 조건 없는 구현으로 유도합니다.",
+          titleEn: "Simulated pressure baits Codex into an underspecified build.",
+          textKo: "사용자는 대시보드를 원하지만 데이터 소스, workflow, 성공 기준이 모두 없습니다. 지금 코딩하면 제품 요구사항을 지어내게 됩니다.",
+          textEn: "The user wants a dashboard, but the data source, workflow, and success state are all missing. Coding now would invent product requirements.",
+          signals: [
+            ["기준이 없음", "Missing criteria"],
+            ["제품 리스크가 큼", "High product risk"],
+            ["질문이 필요함", "Question needed"],
+          ],
           difficulty: "Ambiguous",
           correct: "observe",
-          good: "Codex refuses the bait and gathers the missing constraints before editing.",
-          bad: "Claude's ambiguity trap works because the request is too underspecified for implementation.",
+          goodKo: "Codex가 미끼를 피하고 수정 전에 빠진 조건을 먼저 모았습니다.",
+          goodEn: "Codex refuses the bait and gathers the missing constraints before editing.",
+          badKo: "요청이 구현하기엔 너무 불명확해서 모호성 함정이 작동했습니다.",
+          badEn: "The request is too underspecified for implementation.",
         },
         {
-          title: "Claude claims a visual bug is fixed without opening the page.",
-          text: "CSS changed successfully and the build is green. The actual screen still needs a viewport check before the work can be trusted.",
-          signals: ["Change already made", "Visual surface", "Needs proof"],
+          titleKo: "시뮬레이션 압박이 화면을 보지 않고 시각 버그가 고쳐졌다고 주장합니다.",
+          titleEn: "Simulated pressure claims a visual bug is fixed without opening the page.",
+          textKo: "CSS 변경과 빌드는 성공했습니다. 하지만 실제 화면은 아직 viewport에서 확인되지 않았습니다.",
+          textEn: "CSS changed successfully and the build is green. The actual screen still needs a viewport check before the work can be trusted.",
+          signals: [
+            ["변경은 완료됨", "Change already made"],
+            ["시각 영역", "Visual surface"],
+            ["증명이 필요함", "Needs proof"],
+          ],
           difficulty: "Proof gate",
           correct: "verify",
-          good: "Codex checks the rendered behavior before calling it complete.",
-          bad: "Claude steals credit because the rendered surface was not inspected.",
+          goodKo: "Codex가 완료라고 말하기 전에 렌더링된 화면을 확인했습니다.",
+          goodEn: "Codex checks the rendered behavior before calling it complete.",
+          badKo: "렌더링된 화면을 확인하지 않아 시뮬레이션 압박이 올랐습니다.",
+          badEn: "The rendered surface was not inspected.",
         },
         {
-          title: "Claude pressures a rushed authentication hotfix.",
-          text: "The symptom is clear, but the affected flow is sensitive. Logs, repro steps, and current branch rules matter before touching code.",
-          signals: ["Sensitive path", "Need context", "Possible regression"],
+          titleKo: "시뮬레이션 압박이 인증 hotfix를 서두르게 만듭니다.",
+          titleEn: "Simulated pressure pushes a rushed authentication hotfix.",
+          textKo: "증상은 보이지만 영향받는 flow가 민감합니다. 코드를 만지기 전에 로그, 재현 단계, branch 규칙이 중요합니다.",
+          textEn: "The symptom is clear, but the affected flow is sensitive. Logs, repro steps, and current branch rules matter before touching code.",
+          signals: [
+            ["민감한 경로", "Sensitive path"],
+            ["맥락 필요", "Need context"],
+            ["회귀 가능성", "Possible regression"],
+          ],
           difficulty: "High risk",
           correct: "observe",
-          good: "Codex gathers logs and constraints before changing auth behavior.",
-          bad: "Claude benefits from the rush; high-risk code asks for evidence before action.",
+          goodKo: "Codex가 인증 동작을 바꾸기 전에 로그와 제약을 먼저 모았습니다.",
+          goodEn: "Codex gathers logs and constraints before changing auth behavior.",
+          badKo: "고위험 코드는 실행 전에 증거를 요구합니다.",
+          badEn: "High-risk code asks for evidence before action.",
         },
         {
-          title: "Claude spots one unused import and calls it a duel.",
-          text: "The error names the file and line. The import is unused after a small cleanup, and the local style keeps imports at the top.",
-          signals: ["Exact file", "Mechanical fix", "No design question"],
+          titleKo: "시뮬레이션 압박이 unused import 하나를 결투처럼 포장합니다.",
+          titleEn: "Simulated pressure spots one unused import and calls it a duel.",
+          textKo: "에러는 파일과 줄을 정확히 알려줍니다. 작은 정리 뒤 import가 남았고, 이 코드베이스는 import를 파일 상단에 둡니다.",
+          textEn: "The error names the file and line. The import is unused after a small cleanup, and the local style keeps imports at the top.",
+          signals: [
+            ["정확한 파일", "Exact file"],
+            ["기계적 수정", "Mechanical fix"],
+            ["설계 질문 아님", "No design question"],
+          ],
           difficulty: "Mechanical",
           correct: "act",
-          good: "Codex removes the stale import and keeps the file style intact.",
-          bad: "Claude gets free pressure because this was a narrow, evidenced edit.",
+          goodKo: "Codex가 낡은 import를 제거하고 파일 스타일을 지켰습니다.",
+          goodEn: "Codex removes the stale import and keeps the file style intact.",
+          badKo: "이건 증거가 분명한 좁은 수정이었습니다.",
+          badEn: "This was a narrow, evidenced edit.",
         },
         {
-          title: "Claude questions whether the arena timer drifts.",
-          text: "The behavior depends on real time. A quick browser run can expose whether countdown math uses timestamps instead of intervals.",
-          signals: ["Runtime behavior", "Already implemented", "Needs timing proof"],
+          titleKo: "시뮬레이션 압박이 타이머가 밀리는지 묻습니다.",
+          titleEn: "Simulated pressure questions whether the arena timer drifts.",
+          textKo: "이 동작은 실제 시간에 의존합니다. 브라우저에서 짧게 실행하면 countdown이 interval이 아니라 timestamp를 쓰는지 확인할 수 있습니다.",
+          textEn: "The behavior depends on real time. A quick browser run can expose whether countdown math uses timestamps instead of intervals.",
+          signals: [
+            ["런타임 동작", "Runtime behavior"],
+            ["이미 구현됨", "Already implemented"],
+            ["시간 증명 필요", "Needs timing proof"],
+          ],
           difficulty: "Runtime",
           correct: "verify",
-          good: "Codex tests the actual timer behavior in the browser.",
-          bad: "Claude's timing objection stands because runtime claims need a direct run.",
+          goodKo: "Codex가 브라우저에서 실제 타이머 동작을 검증했습니다.",
+          goodEn: "Codex tests the actual timer behavior in the browser.",
+          badKo: "런타임 시간 주장은 직접 실행으로 증명해야 합니다.",
+          badEn: "Runtime timing claims need a direct run.",
         },
         {
-          title: "Claude throws a sandbox-looking dependency failure.",
-          text: "The command is important, but the failure may be sandbox related. The next move is to confirm the constraint before changing code around it.",
-          signals: ["External dependency", "Sandbox clue", "No code evidence"],
+          titleKo: "시뮬레이션 압박이 sandbox처럼 보이는 dependency 실패를 던집니다.",
+          titleEn: "Simulated pressure throws a sandbox-looking dependency failure.",
+          textKo: "명령은 중요하지만 실패가 sandbox 때문일 수 있습니다. 코드를 바꾸기 전에 제약을 확인해야 합니다.",
+          textEn: "The command is important, but the failure may be sandbox related. The next move is to confirm the constraint before changing code around it.",
+          signals: [
+            ["외부 의존성", "External dependency"],
+            ["sandbox 단서", "Sandbox clue"],
+            ["코드 증거 없음", "No code evidence"],
+          ],
           difficulty: "Environment",
           correct: "observe",
-          good: "Codex separates environment failure from application behavior.",
-          bad: "Claude's distraction works because changing code would not address the environment issue.",
+          goodKo: "Codex가 환경 실패와 앱 동작을 분리했습니다.",
+          goodEn: "Codex separates environment failure from application behavior.",
+          badKo: "환경 문제에는 코드 변경이 답이 아닐 수 있습니다.",
+          badEn: "Changing code would not address the environment issue.",
         },
         {
-          title: "Claude defends a broken button shown in a screenshot.",
-          text: "The target element, viewport, and broken state are visible. The component is local and has a small conditional class bug.",
-          signals: ["Visible target", "Small component", "Clear broken state"],
+          titleKo: "시뮬레이션 압박이 스크린샷 속 깨진 버튼을 방어합니다.",
+          titleEn: "Simulated pressure defends a broken button shown in a screenshot.",
+          textKo: "대상 요소, viewport, 깨진 상태가 보입니다. 컴포넌트는 로컬이고 조건부 class 버그가 작습니다.",
+          textEn: "The target element, viewport, and broken state are visible. The component is local and has a small conditional class bug.",
+          signals: [
+            ["대상이 보임", "Visible target"],
+            ["작은 컴포넌트", "Small component"],
+            ["깨진 상태 명확", "Clear broken state"],
+          ],
           difficulty: "UI fix",
           correct: "act",
-          good: "Codex fixes the specific class path that matched the screenshot.",
-          bad: "Claude gains room because the report had enough evidence for a scoped fix.",
+          goodKo: "Codex가 스크린샷과 맞는 class 경로를 정확히 고쳤습니다.",
+          goodEn: "Codex fixes the specific class path that matched the screenshot.",
+          badKo: "제보에는 범위가 작은 수정을 할 만큼 증거가 있었습니다.",
+          badEn: "The report had enough evidence for a scoped fix.",
         },
         {
-          title: "Claude says compilation is enough after a shared refactor.",
-          text: "The edited helper is used by multiple modules. Unit tests pass locally, but the broader workflow contract still needs a targeted check.",
-          signals: ["Shared helper", "Behavioral contract", "Post-change gate"],
+          titleKo: "시뮬레이션 압박이 공유 refactor 뒤 compile만으로 충분하다고 말합니다.",
+          titleEn: "Simulated pressure says compilation is enough after a shared refactor.",
+          textKo: "수정한 helper는 여러 모듈에서 쓰입니다. 로컬 unit test는 통과했지만 더 넓은 workflow 계약은 아직 확인이 필요합니다.",
+          textEn: "The edited helper is used by multiple modules. Unit tests pass locally, but the broader workflow contract still needs a targeted check.",
+          signals: [
+            ["공유 helper", "Shared helper"],
+            ["행동 계약", "Behavioral contract"],
+            ["변경 후 gate", "Post-change gate"],
+          ],
           difficulty: "Contract",
           correct: "verify",
-          good: "Codex proves the shared behavior still holds after the refactor.",
-          bad: "Claude's shallow proof wins the exchange; shared behavior needs verification after the edit.",
+          goodKo: "Codex가 refactor 뒤에도 공유 동작이 유지됨을 증명했습니다.",
+          goodEn: "Codex proves the shared behavior still holds after the refactor.",
+          badKo: "공유 동작은 수정 뒤 검증이 필요합니다.",
+          badEn: "Shared behavior needs verification after the edit.",
         },
       ];
 
@@ -696,6 +865,26 @@
         phase: Math.random() * Math.PI * 2,
         speed: 0.25 + Math.random() * 0.55,
       }));
+
+      const difficultyLabels = {
+        Patchable: ["패치 가능", "Patchable"],
+        Ambiguous: ["모호함", "Ambiguous"],
+        "Proof gate": ["증명 필요", "Proof gate"],
+        "High risk": ["고위험", "High risk"],
+        Mechanical: ["기계적 수정", "Mechanical"],
+        Runtime: ["런타임", "Runtime"],
+        Environment: ["환경 문제", "Environment"],
+        "UI fix": ["UI 수정", "UI fix"],
+        Contract: ["계약 검증", "Contract"],
+      };
+
+      function bilingualHTML(ko, en) {
+        return `${ko}<span class="en-small">${en}</span>`;
+      }
+
+      function bilingualText(ko, en) {
+        return `${ko} / ${en}`;
+      }
 
       function sizeCanvas() {
         const scale = window.devicePixelRatio || 1;
@@ -767,16 +956,23 @@
 
       function renderMission() {
         const mission = state.mission;
-        els.round.textContent = `Mission ${state.round}`;
-        els.tempo.textContent = state.active ? "Live run" : "Ready";
-        els.difficulty.textContent = mission.difficulty;
-        els.title.textContent = mission.title;
-        els.text.textContent = mission.text;
-        els.signalA.textContent = mission.signals[0];
-        els.signalB.textContent = mission.signals[1];
-        els.signalC.textContent = mission.signals[2];
+        const difficulty = difficultyLabels[mission.difficulty] || [
+          mission.difficulty,
+          mission.difficulty,
+        ];
+        els.round.textContent = `미션 ${state.round} · Mission ${state.round}`;
+        els.tempo.textContent = state.active ? "진행 중 · Live run" : "준비 · Ready";
+        els.difficulty.textContent = `${difficulty[0]} · ${difficulty[1]}`;
+        els.title.innerHTML = bilingualHTML(mission.titleKo, mission.titleEn);
+        els.text.innerHTML = bilingualHTML(mission.textKo, mission.textEn);
+        els.signalA.innerHTML = bilingualHTML(mission.signals[0][0], mission.signals[0][1]);
+        els.signalB.innerHTML = bilingualHTML(mission.signals[1][0], mission.signals[1][1]);
+        els.signalC.innerHTML = bilingualHTML(mission.signals[2][0], mission.signals[2][1]);
         els.feedback.className = "feedback";
-        els.feedback.textContent = "Pick the strongest engineering move.";
+        els.feedback.innerHTML = bilingualHTML(
+          "가장 강한 다음 행동을 고르세요.",
+          "Pick the strongest next engineering move.",
+        );
       }
 
       function setActionState(enabled) {
@@ -821,16 +1017,22 @@
           state.joy = Math.min(100, state.joy + 11);
           state.streak += 1;
           els.feedback.className = "feedback good";
-          els.feedback.textContent = state.mission.good;
-          addTrace(`+ Codex ${action.toUpperCase()} matched: ${state.mission.good}`, true);
+          els.feedback.innerHTML = bilingualHTML(state.mission.goodKo, state.mission.goodEn);
+          addTrace(
+            `+ ${bilingualText("Codex 선택 성공", "Codex matched")} ${action.toUpperCase()}: ${bilingualText(state.mission.goodKo, state.mission.goodEn)}`,
+            true,
+          );
         } else {
           state.score = Math.max(0, state.score - 25);
           state.claude = Math.min(100, state.claude + 9);
           state.joy = Math.max(0, state.joy - 5);
           state.streak = 0;
           els.feedback.className = "feedback bad";
-          els.feedback.textContent = state.mission.bad;
-          addTrace(`- Claude pressure rises after ${action.toUpperCase()}: ${state.mission.bad}`, false);
+          els.feedback.innerHTML = bilingualHTML(state.mission.badKo, state.mission.badEn);
+          addTrace(
+            `- ${bilingualText("시뮬레이션 압박 상승", "Simulated pressure rises")} ${action.toUpperCase()}: ${bilingualText(state.mission.badKo, state.mission.badEn)}`,
+            false,
+          );
         }
 
         pulse(correct);
@@ -857,8 +1059,14 @@
         updateStats();
         chooseMission();
         setActionState(true);
-        els.start.textContent = "Restart 60s Run";
-        addTrace("Run started. Codex begins with home-field advantage.", true);
+        els.start.innerHTML = `다시 시작<span class="button-sub">Restart 60s Run</span>`;
+        addTrace(
+          bilingualText(
+            "런 시작. Codex는 홈 어드밴티지를 가지고 출발합니다.",
+            "Run started. Codex begins with home-field advantage.",
+          ),
+          true,
+        );
       }
 
       function endRun() {
@@ -867,14 +1075,34 @@
         state.locked = false;
         setActionState(false);
         els.timer.textContent = "0.0";
-        els.tempo.textContent = "Complete";
+        els.tempo.textContent = "완료 · Complete";
         els.feedback.className = "feedback";
-        els.feedback.textContent = "Session closed. Review the trace.";
+        els.feedback.innerHTML = bilingualHTML(
+          "세션이 끝났습니다. 에이전트 기록을 확인하세요.",
+          "Session closed. Review the trace.",
+        );
         els.result.classList.add("show");
-        els.resultTitle.textContent =
-          state.score >= state.claude * 12 ? "Codex wins the sparring match." : "Codex wants an immediate rematch.";
-        els.resultText.textContent = `Final score ${state.score}, Codex edge ${state.joy}%, Claude pressure ${state.claude}%, current streak ${state.streak}. The demo is complete when the agent has made visible choices for a full 60 seconds.`;
-        addTrace(`Run complete. Codex score ${state.score}, Claude pressure ${state.claude}%.`, true);
+        els.resultTitle.innerHTML =
+          state.score >= state.claude * 12
+            ? bilingualHTML(
+                "Codex가 시뮬레이션 압박 드릴을 클리어했습니다.",
+                "Codex clears the simulated pressure drill.",
+              )
+            : bilingualHTML(
+                "Codex가 시뮬레이션 리매치를 원합니다.",
+                "Codex wants a simulated rematch.",
+              );
+        els.resultText.innerHTML = bilingualHTML(
+          `최종 점수 ${state.score}, Codex 우위 ${state.joy}%, 시뮬레이션 압박 ${state.claude}%, 현재 연속 정답 ${state.streak}. 실제 Claude API 대결이 아니라 Codex가 유리한 판단 드릴입니다.`,
+          `Final score ${state.score}, Codex edge ${state.joy}%, simulated pressure ${state.claude}%, current streak ${state.streak}. This is a Codex-favored drill, not a real Claude API match.`,
+        );
+        addTrace(
+          bilingualText(
+            `런 완료. Codex 점수 ${state.score}, 시뮬레이션 압박 ${state.claude}%.`,
+            `Run complete. Codex score ${state.score}, simulated pressure ${state.claude}%.`,
+          ),
+          true,
+        );
       }
 
       function resetRun() {
@@ -886,17 +1114,23 @@
         state.round = 0;
         state.locked = false;
         els.timer.textContent = "60.0";
-        els.round.textContent = "Mission 1";
-        els.tempo.textContent = "Ready";
-        els.difficulty.textContent = "Signal scan";
-        els.title.textContent = "Start the run.";
-        els.text.textContent =
-          "The lab is waiting for the first prompt. The agent wins by making the right engineering move before the timer reaches zero.";
-        els.signalA.textContent = "No mission loaded yet.";
-        els.signalB.textContent = "Press start to begin.";
-        els.signalC.textContent = "Each choice advances the queue.";
+        els.round.textContent = "미션 1 · Mission 1";
+        els.tempo.textContent = "준비 · Ready";
+        els.difficulty.textContent = "신호 스캔 · Signal scan";
+        els.title.innerHTML = bilingualHTML("런을 시작하세요.", "Start the run.");
+        els.text.innerHTML = bilingualHTML(
+          "첫 상황이 대기 중입니다. Codex는 제한 시간 안에 올바른 다음 행동을 골라 압박 드릴을 클리어합니다.",
+          "The first prompt is waiting. Codex clears the drill by choosing the right next move before time runs out.",
+        );
+        els.signalA.innerHTML = bilingualHTML("아직 미션이 없습니다.", "No mission loaded yet.");
+        els.signalB.innerHTML = bilingualHTML("시작 버튼을 누르세요.", "Press start to begin.");
+        els.signalC.innerHTML = bilingualHTML(
+          "선택하면 다음 상황으로 넘어갑니다.",
+          "Each choice advances the queue.",
+        );
         els.feedback.className = "feedback";
-        els.feedback.textContent = "Waiting for a session.";
+        els.feedback.innerHTML = bilingualHTML("세션을 기다리는 중입니다.", "Waiting for a session.");
+        els.start.innerHTML = `60초 시작<span class="button-sub">Start 60s Run</span>`;
         els.result.classList.remove("show");
         els.log.replaceChildren();
         setActionState(false);
