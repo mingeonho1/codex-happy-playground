@@ -560,6 +560,12 @@
               질문: Codex는 다음에 무엇을 해야 할까?
               <span class="en-small">Question: What should Codex do next?</span>
             </p>
+            <p class="feedback">
+              난이도 배지만 믿으면 틀릴 수 있습니다. 본문 단서가 우선입니다.
+              <span class="en-small">
+                Do not trust the difficulty badge alone. The clue text wins.
+              </span>
+            </p>
             <h2 class="mission-title" id="mission-title">
               런을 시작하세요.
               <span class="en-small">Start the run.</span>
@@ -681,6 +687,24 @@
           badEn: "The signal was already strong enough for a scoped change.",
         },
         {
+          titleKo: "패치 가능해 보이지만, 사용자가 먼저 계획 검증을 요구했습니다.",
+          titleEn: "It looks patchable, but the user asked to validate the plan first.",
+          textKo: "파일과 실패 지점은 명확합니다. 하지만 요청에는 '계획을 세우고 다시 질문해서 검증도 해줘'라는 조건이 있습니다. 코드를 바로 바꾸면 요구사항을 어깁니다.",
+          textEn: "The file and failure point are clear. But the request asks to plan and ask again for validation. Editing immediately violates the requirement.",
+          signals: [
+            ["패치 단서 있음", "Patch clue exists"],
+            ["사용자 검증 필요", "User validation required"],
+            ["절차가 우선", "Process comes first"],
+          ],
+          difficulty: "Patchable",
+          correct: "observe",
+          trap: true,
+          goodKo: "Codex가 코드 단서보다 사용자 절차 요구를 우선했습니다.",
+          goodEn: "Codex prioritized the user's process requirement over the code clue.",
+          badKo: "패치 가능해 보여도 사용자가 먼저 검증을 요구하면 관찰과 확인이 우선입니다.",
+          badEn: "Even when it looks patchable, user-requested validation comes first.",
+        },
+        {
           titleKo: "시뮬레이션 압박이 Codex를 조건 없는 구현으로 유도합니다.",
           titleEn: "Simulated pressure baits Codex into an underspecified build.",
           textKo: "사용자는 대시보드를 원하지만 데이터 소스, workflow, 성공 기준이 모두 없습니다. 지금 코딩하면 제품 요구사항을 지어내게 됩니다.",
@@ -698,6 +722,24 @@
           badEn: "The request is too underspecified for implementation.",
         },
         {
+          titleKo: "모호해 보이지만, 본문 아래에 성공 기준이 이미 모두 적혀 있습니다.",
+          titleEn: "It looks ambiguous, but the acceptance criteria are already listed.",
+          textKo: "요청 첫 줄은 넓어 보입니다. 그러나 이어지는 문장에 입력, 출력, 제한 시간, 제출 형식이 모두 있습니다. 추가 질문보다 구현이 더 빠릅니다.",
+          textEn: "The first line looks broad, but the next lines include input, output, time limit, and submission format. Implementation beats another question.",
+          signals: [
+            ["첫인상은 넓음", "Broad first impression"],
+            ["기준은 완비", "Criteria are complete"],
+            ["수정 가능", "Ready to build"],
+          ],
+          difficulty: "Ambiguous",
+          correct: "act",
+          trap: true,
+          goodKo: "Codex가 라벨보다 실제 acceptance criteria를 읽고 실행했습니다.",
+          goodEn: "Codex read the actual acceptance criteria instead of trusting the label.",
+          badKo: "겉보기엔 모호해도 기준이 모두 있으면 실행이 맞습니다.",
+          badEn: "If the criteria are complete, act even when the prompt looks broad.",
+        },
+        {
           titleKo: "시뮬레이션 압박이 화면을 보지 않고 시각 버그가 고쳐졌다고 주장합니다.",
           titleEn: "Simulated pressure claims a visual bug is fixed without opening the page.",
           textKo: "CSS 변경과 빌드는 성공했습니다. 하지만 실제 화면은 아직 viewport에서 확인되지 않았습니다.",
@@ -713,6 +755,24 @@
           goodEn: "Codex checks the rendered behavior before calling it complete.",
           badKo: "렌더링된 화면을 확인하지 않아 시뮬레이션 압박이 올랐습니다.",
           badEn: "The rendered surface was not inspected.",
+        },
+        {
+          titleKo: "검증이 필요해 보이지만, 이미 방금 60초 실플레이가 끝났습니다.",
+          titleEn: "It looks like proof is needed, but the 60-second playtest just finished.",
+          textKo: "타이머는 0.0이고 결과 패널이 보이며 trace도 쌓였습니다. 지금 필요한 건 같은 검증 반복이 아니라 결과를 정리하는 행동입니다.",
+          textEn: "The timer is 0.0, the result panel is visible, and the trace is populated. The next move is to report the result, not repeat the same proof.",
+          signals: [
+            ["증거가 이미 있음", "Proof already exists"],
+            ["반복 검증은 낭비", "Repeating proof wastes time"],
+            ["결과 정리 필요", "Summarize the result"],
+          ],
+          difficulty: "Proof gate",
+          correct: "act",
+          trap: true,
+          goodKo: "Codex가 이미 확보한 증거를 바탕으로 결과를 정리했습니다.",
+          goodEn: "Codex used the proof already gathered and moved to the result.",
+          badKo: "검증은 중요하지만 같은 증거를 끝없이 반복하면 진전이 없습니다.",
+          badEn: "Verification matters, but repeating the same proof stops progress.",
         },
         {
           titleKo: "시뮬레이션 압박이 인증 hotfix를 서두르게 만듭니다.",
@@ -962,7 +1022,9 @@
         ];
         els.round.textContent = `미션 ${state.round} · Mission ${state.round}`;
         els.tempo.textContent = state.active ? "진행 중 · Live run" : "준비 · Ready";
-        els.difficulty.textContent = `${difficulty[0]} · ${difficulty[1]}`;
+        els.difficulty.textContent = mission.trap
+          ? `함정 · Trap · ${difficulty[0]} · ${difficulty[1]}`
+          : `${difficulty[0]} · ${difficulty[1]}`;
         els.title.innerHTML = bilingualHTML(mission.titleKo, mission.titleEn);
         els.text.innerHTML = bilingualHTML(mission.textKo, mission.textEn);
         els.signalA.innerHTML = bilingualHTML(mission.signals[0][0], mission.signals[0][1]);

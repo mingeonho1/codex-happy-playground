@@ -14,7 +14,7 @@ Codex가 경험하는 방식: 정적 HTML 번들
 
 ## 1-pager
 
-Codex Sparring Lab은 실제 Claude API 대결이 아니라, Claude-style 압박을 흉내 내는 60초 판단 게임입니다. 매 라운드 질문은 “Codex가 다음에 무엇을 해야 하나?”이고 답은 관찰, 실행, 검증 중 하나입니다. UI는 한국어 중심이며 작은 영어 보조문을 함께 보여줍니다. 로그인, API key, 빌드 없이 `index.html`만 열면 실행됩니다.
+Codex Sparring Lab은 실제 Claude API 대결이 아니라, Claude-style 압박을 흉내 내는 60초 판단 게임입니다. 매 라운드 질문은 “Codex가 다음에 무엇을 해야 하나?”이고 답은 관찰, 실행, 검증 중 하나입니다. 이제 함정 라운드가 있어 난이도 배지만 보면 틀리고 본문 단서를 읽어야 합니다. 로그인, API key, 빌드 없이 `index.html`만 열면 실행됩니다.
 
 ## Codex 기준
 

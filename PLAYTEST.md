@@ -38,3 +38,4 @@ Copy clarification added after this run:
 - The project now states that no Claude API is used.
 - The opponent is framed as simulated Claude-style pressure, not real Claude.
 - The win state is framed as clearing a simulated pressure drill.
+- Three trap missions were added after the playtest: the correct action can now differ from the difficulty badge, so the player must read the clue text.
